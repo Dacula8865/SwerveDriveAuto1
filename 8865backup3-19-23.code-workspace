@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "SwerveDriveAuto1",
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}
