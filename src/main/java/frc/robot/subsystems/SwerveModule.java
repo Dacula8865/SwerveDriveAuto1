@@ -108,8 +108,11 @@ public class SwerveModule {
         }
 
         // state = SwerveModuleState.optimize(state, getState().angle);
-        driveMotor.set(ControlMode.PercentOutput, state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
-        turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(Units.degreesToRadians(getTurningPosition()), state.angle.getRadians()));
+        
+        SwerveModuleState desiredstate = SwerveModuleState.optimize(state, Rotation2d.fromDegrees(getTurningPosition()));
+        driveMotor.set(ControlMode.PercentOutput, desiredstate.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(Units.degreesToRadians(getTurningPosition()), desiredstate.angle.getRadians()));
+
         // turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(Units.degreesToRadians(getTurningPosition()), Rotation2d.fromDegrees(45).getRadians()));
         SmartDashboard.putString("Swerve[" + modConstants.moduleNumber + "] state", state.toString());
         lastAngle = state.angle;
